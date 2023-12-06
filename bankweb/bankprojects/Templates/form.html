@@ -1,0 +1,225 @@
+
+{% load static  %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>form</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body style="background-color:rgb(46,139,87);">
+<br>
+<div class="container-fluid ">
+  <div class="fdiv">
+<form  action="{% url 'bankapp:form' %}" method="POST" enctype="multipart/form-data">
+     {% csrf_token %}
+  <div class="row">
+  <div class="col-md-6">
+  <label for="Name" class="form-label">Name</label>
+  <input type="text" class="form-control" id="Name" name="Name" placeholder="Enter your name ">
+  </div>
+  <div class="col-md-6">
+    <label for="birthday" class="form-label">DOB</label>
+    <input type="date" id="birthday" name="DOB" class="form-control">
+  </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <label for="phone" class="form-label">phone number:</label>
+      <input type="tel" id="phone"  class="form-control" name="Phone" placeholder="123-45-678" required>
+    </div>
+     <div class="col-md-6">
+  <label for="Age" class="form-label">Age</label>
+  <input type="text" class="form-control" id="Age" name="Age" placeholder="Enter your Age ">
+  </div>
+  </div>
+
+  <div class="row">
+     <label class="form-label">Gender</label><br>
+    <div class="col-md-6">
+     <input type="radio" id="male" name="gender" value="male">
+     <label for="male">Male</label><br>
+     </div>
+     <div class="col-md-6">
+     <input type="radio" id="female" name="gender" value="female">
+     <label for="female">female</label><br>
+   </div>
+  </div>
+
+  <div class="row">
+  <div class="col-md-12">
+    <label for="inputEmail4" class="form-label">Email</label>
+    <input type="email" class="form-control" id="inputEmail4" name="Email" placeholder="Enter your Email" >
+  </div>
+    </div>
+
+  <div class="row">
+  <div class="col-12">
+    <label for="inputAddress" class="form-label">Address</label>
+    <input type="text" class="form-control" id="inputAddress" name="Address" placeholder="1234 Main St">
+  </div>
+     </div>
+
+
+  <div class="row">
+  <div class="col-md-6">
+<label for="district" class="form-label">District:</label>
+<select id="district" onchange="updateSubDistricts()" class="form-select">
+    <option value="" disabled selected name="District" >select district</option>
+    <option value="palakkad" name="District">Palakkad</option>
+    <option value="kozhikode" name="District">Kozhikode</option>
+    <option value="Thiruvananthapuram" name="District">Thiruvananthapuram</option>
+  <option value="Ernakulam" name="District">Ernakulam</option>
+  <option value="Malappuram" name="District">Malappuram</option>
+</select>
+    </div>
+
+    <div class="col-md-6">
+<label for="subDistrict" id="subDistrictLabel" class="hidden form-label">Branches</label>
+<select id="subDistrict" class="hidden form-select" name="Branches">
+    <!-- Options will be dynamically added based on the selected district -->
+</select>
+      </div>
+     </div>
+
+<script>
+    function updateSubDistricts() {
+        var districtSelect = document.getElementById("district");
+        var subDistrictSelect = document.getElementById("subDistrict");
+        var subDistrictLabel = document.getElementById("subDistrictLabel");
+
+        // Reset sub-district dropdown
+        subDistrictSelect.innerHTML = '<option value="" disabled selected>Select Sub-District</option>';
+
+        // Get the selected district
+        var selectedDistrict = districtSelect.value;
+
+        // Show/hide sub-district dropdown based on the selected district
+        if (selectedDistrict === "palakkad") {
+            subDistrictLabel.classList.remove("hidden");
+            subDistrictSelect.classList.remove("hidden");
+
+            // Add options for Palakkad district
+            var palakkadSubDistricts = ["Mannarkkad", "Alathur","Chittur","Ottappalam"];
+            palakkadSubDistricts.forEach(function (subDistrict) {
+                var option = document.createElement("option");
+                option.text = subDistrict;
+                subDistrictSelect.add(option);
+            });
+        } else if (selectedDistrict === "kozhikode") {
+            subDistrictLabel.classList.remove("hidden");
+            subDistrictSelect.classList.remove("hidden");
+
+            // Add options for Kozhikode district
+            var kozhikodeSubDistricts = ["Vadakara", "Koyilandy","Thamarassery","Koduvally"];
+            kozhikodeSubDistricts.forEach(function (subDistrict) {
+                var option = document.createElement("option");
+                option.text = subDistrict;
+                subDistrictSelect.add(option);
+            });
+             } else if (selectedDistrict === "Malappuram") {
+            subDistrictLabel.classList.remove("hidden");
+            subDistrictSelect.classList.remove("hidden");
+
+            // Add options for Malappuram district
+            var MalappuramSubDistricts = ["Ponnani","Tirur","Tiruanagadi","Kondotty","Eranand","Perinthalmanna","Nilambur"];
+            MalappuramSubDistricts.forEach(function (subDistrict) {
+                var option = document.createElement("option");
+                option.text = subDistrict;
+                subDistrictSelect.add(option);
+            });
+             } else if (selectedDistrict === "Ernakulam") {
+            subDistrictLabel.classList.remove("hidden");
+            subDistrictSelect.classList.remove("hidden");
+
+            // Add options for Ernakulam district
+            var ErnakulamSubDistricts = ["Aluva","Angamaly","Edapally","Kochi"];
+            ErnakulamSubDistricts.forEach(function (subDistrict) {
+                var option = document.createElement("option");
+                option.text = subDistrict;
+                subDistrictSelect.add(option);
+            });
+
+             } else if (selectedDistrict === "Thiruvananthapuram") {
+            subDistrictLabel.classList.remove("hidden");
+            subDistrictSelect.classList.remove("hidden");
+
+            // Add options for Thiruvananthapuram district
+            var ThiruvananthapuramSubDistricts = ["Parassala","Kazhakootam","Varkala","Nedumanagad"];
+            ThiruvananthapuramSubDistricts.forEach(function (subDistrict) {
+                var option = document.createElement("option");
+                option.text = subDistrict;
+                subDistrictSelect.add(option);
+            });
+
+        } else {
+            // Hide sub-district dropdown if no district is selected
+            subDistrictLabel.classList.add("hidden");
+            subDistrictSelect.classList.add("hidden");
+        }
+    }
+
+</script>
+
+ <div class="col-md-6">
+    <label for="Account_types" class="form-label">Account type</label>
+    <select id="Account_types" class="form-select">
+      <option value="savingaccount" disabled selected name="Account_type" >Saving Account</option>
+      <option value="currentaccount" name="Account_type" >Current Account</option>
+      <option value="Personalaccount" name="Account_type">Personal account</option>
+      <option value="Nominalaccount" name="Account_type">Nominal account</option>
+    </select>
+  </div>
+
+
+  <div class="row">
+     <label  class="form-label">Available Materials</label>
+  <div class="col-3">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="CreditCard" value="CreditCard" name="Material">
+      <label class="form-check-label" for="CreditCard">Credit Card
+      </label>
+    </div>
+  </div>
+    <div class="col-3">
+     <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="DebitCard" name="Material" value="DebitCard">
+      <label class="form-check-label" for="DebitCard">
+        DebitCard
+      </label>
+    </div>
+      </div>
+    <div class="col-3">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="ChequeBook" value="ChequeBook" name="Material">
+      <label class="form-check-label" for="ChequeBook">
+        ChequeBook
+      </label>
+    </div>
+  </div>
+  </div>
+  <div class="row">
+  <div class="col-6 sub form-label"><br>
+    <button type="submit" class="btn btn-success form-control" >Submit</button>
+  </div>
+
+      <div class="col-6 sub form-label"><br>
+    <a href="{% url 'bankapp:logout' %}">
+        <button type="button" class="btn btn-danger form-control">Logout</button>
+    </a>
+</div>
+
+
+    </div>
+</form>
+    </div>
+
+</div><br>
+</body>
+<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" />
+</html>
+
